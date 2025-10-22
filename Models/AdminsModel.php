@@ -1,8 +1,9 @@
 <?php
 
-require_once __DIR__.'/Conexion.php';
+require_once __DIR__. '/Conexion.php';
 
 class AdminsModel{
+    //Login
     public static function findByEmail(string $email){
         $consultaSql = "SELECT
                                 id_administrador,
@@ -28,57 +29,57 @@ class AdminsModel{
         }
     }
 
-    // datatable
+    //datatable
     public static function getDataTable(array $params): array{
-            $pdo = conexion::pdo();
+        $pdo = Conexion::pdo();
 
-            $start = isset($params['start']) ? max(0,(int)$params['start']) : 0;
-            $length = isset($params['length']) ? max(1,(int)$params['length']) : 0;
-            $search = trim($params['search'] ?? '');
-            $orderCol = $params['orderCol'] ?? 'id_administrador';
-            $orderDir = strtoupper($params['orderDir'] ?? 'ASC') === 'DESC' ? 'DESC' : 'ASC';
+        $start = isset($params['start']) ? max(0,(int)$params['start']) : 0;
+        $length = isset($params['length']) ? max(1,(int)$params['length']) : 0;
+        $search = trim($params['search'] ?? '');
+        $orderCol = $params['orderCol'] ?? 'id_administrador';
+        $orderDir = strtoupper($params['orderDir'] ?? 'ASC') === 'DESC' ? 'DESC' : 'ASC';
 
-            $allowed = [
-                'id_administrador',
-                'nombre_administrador',
-                'email_administrador',
-                'rol_administrador',
-                'ultimo_login_administrador'
-            ];
-            if(!in_array($orderCol, $allowed, true)) $orderCol = 'id_administrador';
+        $allowed = [
+            'id_administrador',
+            'nombre_administrador',
+            'email_administrador',
+            'rol_administrador',
+            'ultimo_login_administrador'
+        ];
 
-            // filtro
-            $where = '';
-            $bind = [];
-            if ($search !== ''){
+        if (!in_array($orderCol, $allowed, true)) $orderCol = 'id_administrador';
 
-                $where = "WHERE nombre_administrador LIKE :s1 OR email_administrador LIKE :s2";
-                $bind[':s1'] = "%{$search}%";
-                $bind[':s2'] = "%{$search}%";
-            } 
+        //filtro
+        $where = '';
+        $bind = [];
+        if ($search !== ''){
+            $where = "WHERE nombre_administrador LIKE :s1 OR email_administrador LIKE :s2";
+            $bind[':s1'] = "%{$search}%";
+            $bind[':s2'] = "%{$search}%";
+        }
 
-            // totales
-            $total = (int)$pdo->query("SELECT COUNT(*) FROM administradores")->fetchColumn();
+        //totales
+        $total = (int)$pdo->query("SELECT COUNT(*) FROM administradores")->fetchColumn();
 
-            $stmtCount = $pdo->prepare("SELECT COUNT(*) FROM administradores $where");
+        $stmtCount = $pdo->prepare("SELECT COUNT(*) FROM administradores $where");
 
-            foreach ($bind as $ => $v) $stmtCount->bindValue($K, $V, PDO::PARAM_STR);
-            $stmtCount->execute();
-            $filtered = (int)$stmtCount->fetchColumn();
+        foreach ($bind as $k => $v) $stmtCount->bindValue($k, $v, PDO::PARAM_STR);
+        $stmtCount->execute();
+        $filtered = (int)$stmtCount->fetchColumn();
 
-            // consulta
-            $sql = "SELECT id_administrador, nombre_administrador, email_administrador, rol_administrador, ultimo_login_administrador FROM administradores $where ORDER BY $orderCol $orderDir LIMIT
-            $start, $length";
+        // consulta
+        $sql = "SELECT id_administrador, nombre_administrador, email_administrador, rol_administrador, ultimo_login_administrador FROM administradores $where ORDER BY $orderCol $orderDir LIMIT $start, $length";
 
-            $stmt = $pdo->prepare($sql);
-            foreach ($bind as $K => $v) $stmt->bindValue($K, $v, PDO::PARAM_STR);
-            $stmt->execute();
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $pdo->prepare($sql);
+        foreach ($bind as $k => $v) $stmt->bindValue($k, $v, PDO::PARAM_STR);
+        $stmt->execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            return [
-                'total' => $total,
-                'filtered' => $filtered,
-                'rows' => $rows
-            ]
+        return [
+            'total' => $total,
+            'filtered'  => $filtered,
+            'rows' =>$rows
+        ];
+
     }
 }
