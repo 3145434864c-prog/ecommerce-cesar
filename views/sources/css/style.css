@@ -1,3 +1,24 @@
+/** VARIABLES **/
+:root{
+    --colorPrincipal: #33a7ad;
+    --colorSecundario: rgb(250, 11, 11);
+    --colorAuxiliar: #fff;
+     --colorPrincipalHover: #125f63;
+}
+
+/* background perzonalizados*/
+
+.bg-principal{
+    background-color: var(--colorPrincipal) !important;
+ 
+}
+
+.btn-principal{
+    background-color: var(--colorPrincipal) !important;
+}
+.btn-principal:hover{
+    background-color: var(--colorPrincipalHover) !important;
+}
 
 
 body{
