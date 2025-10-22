@@ -3,7 +3,7 @@
     declare(strict_types=1);
     header('Content_Type: application/json; charset=utf-8');
 
-    require_once __DIR__.'/../Models/AdminsModel.php';
+    require_once __DIR__.'/../../Models/AdminsModel.php';
 
     // Parametros Datatables
 

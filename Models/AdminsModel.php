@@ -1,6 +1,6 @@
 <?php
 
-require_once "Models/Conexion.php";
+require_once __DIR__.'/Conexion.php';
 
 class AdminsModel{
     public static function findByEmail(string $email){
