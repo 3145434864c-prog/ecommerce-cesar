@@ -22,26 +22,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Wiliam Mejia</td>
-                                <td>admin@gmail.com</td>
-                                <td>Administrador</td>
-                                <td>2025-10-20 12:58:58</td>
-                                <td>
-                                    <div class="btn-goup">
-                                        <a href="#" class="bg-info border-0 rounded-pill mr-2 btn-sm px-3">
-                                            <i class="fas fa-pencil-alt text-white"></i>
-                                        </a>
-
-                                        <a href="#" class="bg-danger border-0 rounded-pill mr-2 btn-sm px-3">
-                                            <i class="fas fa-trash-alt text-white"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            
+                          
                         </tbody>
 
                         
@@ -53,3 +34,72 @@
 
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        const tablaAdmins = $('#tablaAdmins').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "<?=$path?>ajax/administradores/listaAdministradores.php",
+            type: "GET"
+        },
+        columns:[
+            {data:0, className:"text-center"},
+            {data:1},
+            {data:2},
+            {data:3,className:"text-center"},
+            {data:4,className:"text-center"},
+            {data:5,orderable:false, searchable:false,className:"text-center"},
+        ],
+        order:[[0,'asc']],
+        pageLength:10,
+        responsive:true,
+        autoWidth:false,
+          language: {
+            url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json" 
+            },
+            drawCallback:function(){
+                $('[data-bs-toggle="tooltip"]').tooltip();
+            }
+        });
+    })
+
+//     $("#tablaAdmins").DataTable({
+//   responsive: true,
+//   pageLength: 10,
+//   lengthMenu: [10, 25, 50, 100],
+//   order: [[0, "desc"]],
+//   language: {
+    // "decimal": "",
+    // "emptyTable": "No hay datos disponibles en la tabla",
+    // "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+    // "infoEmpty": "Mostrando 0 a 0 de 0 entradas",
+    // "infoFiltered": "(filtrado de _MAX_ entradas totales)",
+    // "lengthMenu": "Mostrar _MENU_ entradas",
+    // "loadingRecords": "Cargando...",
+    // "processing": "Procesando...",
+    // "search": "Buscar:",
+    // "zeroRecords": "No se encontraron registros coincidentes",
+    // "paginate": {
+    //     "first": "Primero",
+    //     "last": "Último",
+    //     "next": "Siguiente",
+    //     "previous": "Anterior"
+    // },
+
+//     url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json",
+//   },
+//   lengthChange: true,
+//   autoWidth: false,
+//   processing: true,
+//   serverSide: true,
+//   ajax: {
+//     url: "../ajax/administradores/listaAdministradores.php",
+//     type: "POST",
+//   },
+// });
+
+
+
+</script>
