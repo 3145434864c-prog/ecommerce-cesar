@@ -2,12 +2,39 @@
 
 declare(strict_types=1);
 header('Content_Type: application/json; charset=utf-8');
+// header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+// header('Pragma: no-cache');
 
 require_once __DIR__.'/../../Models/AdminsModel.php';
 
-// Parámetros Datatables
 
-$draw           = (int)($_GET['draw'] ?? 1);
+//iniciar sesión y validar
+if(session_status() !== PHP_SESSION_ACTIVE){
+    session_start();
+}
+
+// Parámetros Datatables
+$draw           = (int)($_GET['draw'] ?? 1); //Datatables espera este valor
+
+if(empty($_SESSION['admin'])){
+    if(session_status() === PHP_SESSION_ACTIVE){
+        $_SESSION = [];
+        session_destroy();
+    }
+
+    echo json_encode([
+        'draw'              => $draw,
+        'recordsTotal'      => 0,
+        'recordsFiltered'   => 0,
+        'error'             => 'No autenticado',
+        'logout'            => true,
+        'redirect'          => '/salir'
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+
+
 $start          = (int)($_GET['start'] ?? 0);
 $length         = (int)($_GET['length'] ?? 10);
 $search         = $_GET['search']['value'] ?? '';
@@ -31,14 +58,21 @@ $respuesta = AdminsModel::getDataTable([
 $data = [];
 
 foreach ($respuesta['rows'] as $i => $r){
+    //ruta de accion directa con id normal
+    $editUrl = "/admin/administradores/editar/{$id}";
+    
     $acciones = '
         <div class="btn-group">
-            <a href="#" class="bg-info border-0 rounded-pill mr-2 btn-sm px-3">
+
+            <a href="'.$editUrl.'" class="bg-info border-0 rounded-pill mr-2 btn-sm px-3">
                 <i class="fas fa-pencil-alt text-white"></i>
+            
             </a>
-            <a href="#" class="bg-danger border-0 rounded-pill mr-2 btn-sm px-3">
+
+            <button type="button" class="bg-danger border-0 rounded-pill mr-2 btn-sm px-3 btn-delete" data-id="'.$id.'">
                 <i class="fas fa-trash-alt text-white"></i>
-            </a>
+            </button>
+
         </div>
     ';
 
@@ -55,6 +89,6 @@ foreach ($respuesta['rows'] as $i => $r){
 echo json_encode([
     'draw'              => $draw,
     'recordsTotal'      => $respuesta['total'],
-    'recordsFiltered'   => $respuesta['total'],
+    'recordsFiltered'   => $respuesta['filtered'],
     'data'              => $data,
 ], JSON_UNESCAPED_UNICODE);
