@@ -58,21 +58,20 @@ $respuesta = AdminsModel::getDataTable([
 $data = [];
 
 foreach ($respuesta['rows'] as $i => $r){
-    //ruta de accion directa con id normal
+
+    $id= (int)$r['id_administrador'];
+
+    //ruta de acción directa con id normal
     $editUrl = "/admin/administradores/editar/{$id}";
     
     $acciones = '
         <div class="btn-group">
-
             <a href="'.$editUrl.'" class="bg-info border-0 rounded-pill mr-2 btn-sm px-3">
                 <i class="fas fa-pencil-alt text-white"></i>
-            
             </a>
-
             <button type="button" class="bg-danger border-0 rounded-pill mr-2 btn-sm px-3 btn-delete" data-id="'.$id.'">
                 <i class="fas fa-trash-alt text-white"></i>
             </button>
-
         </div>
     ';
 
