@@ -11,8 +11,19 @@
                             </div>
                             <div class="col-12 col-lg-6 mt-2 d-none d-lg-block">
                                 <button type="submit" class="btn border-0 bg-principal float-rigth py-2 px-3 btn-sm rounded-pill">Registrar</button>
-                                <a href="/admin/administradores" class="btn btn-sm btn-default float-right py-2 px-3 mr-2 rounded-pill"></a>
+                                <a href="/admin/administradores" class="btn btn-sm btn-default float-right py-2 px-3 mr-2 rounded-pill">Regresar</a>
+                                
                             </div>
+
+                            <div class="col-12 text-center d-flex justify-content-center mt-2 d-block d-lg-none">
+                                <div>
+                                    <a href="/admin/administradores" class="btn btn-xs btn-default py-2 px-3 rounded-pill br-2">Regresar</a>
+                                </div>    
+                                <div>
+                                    <button class="btn border-0 bg-principal py-2 px-3 btn-xs rounded pill" type="submit">Registrar</button>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
