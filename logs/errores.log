@@ -1,0 +1,2 @@
+[29-Oct-2025 20:57:43 Europe/Berlin] PHP Warning:  Undefined array key "passwordAdmin" in C:\xampp1\htdocs\ecommerce-cesar\Controllers\AdminsController.php on line 15
+[29-Oct-2025 20:57:43 Europe/Berlin] PHP Deprecated:  trim(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp1\htdocs\ecommerce-cesar\Controllers\AdminsController.php on line 15
